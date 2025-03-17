@@ -6,6 +6,7 @@ using Dapper.Contrib.Extensions;
 using System.Dynamic;
 using System.Text;
 using Microsoft.Data.Sqlite;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace DriverTask
 {
@@ -16,7 +17,9 @@ namespace DriverTask
 		public DriverRepository()
 		{
 			_connection = new SqliteConnection(_connectionString);
-			_connection.Open();
+            SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_e_sqlite3());
+
+            _connection.Open();
 		}
 
 		
@@ -73,6 +76,27 @@ namespace DriverTask
             var deleted = _connection.Execute(sql, new { Id = id });
 
 			return deleted > 0;
+        }
+
+		public List<Driver> PopulateRandomTenRecords()
+		{
+			List<Driver> driverList = new List<Driver>();
+            for (int i = 0; i < 10; i++)
+            {
+				Driver driver = new Driver()
+				{
+					Email = $"email{i}@test.com",
+					FirstName = $"First{i}",
+					LastName = $"Last{i}",
+					PhoneNumber = $"123-456-789{i}"
+                
+				};
+				//insert record
+				Save(driver);
+				driverList.Add(driver);
+             }
+			return driverList;
+
         }
 
     }

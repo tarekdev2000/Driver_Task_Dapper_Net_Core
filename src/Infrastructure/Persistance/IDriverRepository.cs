@@ -8,5 +8,7 @@ namespace DriverTask
         IEnumerable<Driver> GetAll();
         Driver GetById(int id);
         bool Delete(int id);
+
+        List<Driver> PopulateRandomTenRecords();
     }
 }

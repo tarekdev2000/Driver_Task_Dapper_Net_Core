@@ -18,7 +18,7 @@ namespace DriverTask.Persistence
             var appOptions = configuration.GetSection(nameof(AppOptions)).Get<AppOptions>();
 
 
-            services.AddSingleton<IDbConnection>(sp => new SqliteConnection("Data Source=drivers.db"));
+            services.AddScoped<IDbConnection>(sp => new SqliteConnection("Data Source=drivers.db"));
             services.AddScoped<IDriverRepository, DriverRepository>();
 
             return services;

@@ -5,6 +5,7 @@ using DriverTask.Common.Utilities;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -64,6 +65,15 @@ namespace Api.Controllers.v1
         {
 
             var drivers = _driverRepository.GetAll();
+            return Ok(drivers);
+        }
+
+        [HttpGet("Populate")]
+        [SwaggerOperation("Add new 10 random drivers")]
+        public async Task<IActionResult> PopulateRandomTenRecords()
+        {
+
+            List<Driver> drivers = _driverRepository.PopulateRandomTenRecords();
             return Ok(drivers);
         }
 
