@@ -10,7 +10,7 @@ namespace DriverTask.Api.Controllers.v1
     using System;
 
     [ValidateModelState]
-    [Authorize]
+    //[Authorize]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class BaseControllerV1 : ControllerBase
     {
