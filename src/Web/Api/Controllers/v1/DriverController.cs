@@ -6,6 +6,7 @@ using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -57,6 +58,19 @@ namespace Api.Controllers.v1
         {
             var driver = _driverRepository.GetById(id);
             return driver is null ? NotFound() : Ok(driver);
+        }
+
+        [HttpGet]
+        [SwaggerOperation("get a driver User Name Alphabetized by id")]
+        [Route("Alphabetized")]
+
+        public async Task<IActionResult> GetByIdAlphabetized([FromQuery] int id)
+        {
+            var driver = _driverRepository.GetById(id);
+
+            string alphabetized = new string((driver.FirstName + " " + driver.LastName).OrderBy(c => c).ToArray());
+
+            return driver is null ? NotFound() : Ok(alphabetized);
         }
 
         [HttpGet("all")]
